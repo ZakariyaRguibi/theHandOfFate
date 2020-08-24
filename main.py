@@ -4,8 +4,9 @@ import discord
 from discord.ext import commands
 from dotenv import load_dotenv
 from util import * 
-import dice
+from helpers import *
 load_dotenv()
+from dice_utils import *
 
 #get discord token from .env folder
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -58,10 +59,17 @@ async def whisper(ctx, user: discord.User, *, input_message=None):
 
 @client.command(pass_context=True,aliases=['r'])
 async def roll(ctx,*,input_message):
-    print(input_message)
-    plusIndex=input_message.find("+")
-    
-    print(dice.roll(input_message))
+    result = roll_command(input_message)
+    await ctx.send("**The Madam :** Let me blow on them for you :heart:")
+    await ctx.send(result)
+
+@client.command(pass_context=True,aliases=['s'])
+async def secret(ctx,*,input_message):
+    result = roll_command(input_message)
+    header_string = ctx.message.author.mention + " rolled a secret check :\n"
+    await ctx.send("**The Madam :** Spoilers ... ")
+    await dmDm(header_string+result)
+
 
 #starting 
 client.run(TOKEN)
