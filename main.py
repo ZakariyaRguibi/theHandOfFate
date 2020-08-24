@@ -59,7 +59,7 @@ async def whisper(ctx, user: discord.User, *, input_message=None):
 
 @client.command(pass_context=True,aliases=['r'])
 async def roll(ctx,*,input_message):
-    result = roll_command(input_message)
+    result = format_roll(input_message)
     await ctx.send("**The Madam :** Let me blow on them for you :heart:")
     await ctx.send(result)
 
