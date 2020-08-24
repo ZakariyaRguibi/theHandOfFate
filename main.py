@@ -37,6 +37,7 @@ async def forwardMessage(message,user1,user2):
     dm = client.get_user(getDM())
     await dm.send(message)
 
+#whisper to another player
 @client.command(pass_context=True,aliases=['w'])
 async def whisper(ctx, user: discord.User, *, input_message=None):
     input_message = input_message or "This Message is sent via DM"
