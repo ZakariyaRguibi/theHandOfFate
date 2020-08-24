@@ -41,11 +41,11 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 #sent the dm of the campaign 
-@client.command(pass_context=True)
-async def dm(ctx, user: discord.User): 
+@client.command(pass_context=True,aliases=['dm'])
+async def set_dm(ctx, user: discord.User): 
     strUser = user.id
     setDM(strUser)
-    await ctx.send(user.mention + " is now The Mighty DM , Time for adventure ")
+    await ctx.send("**The Madam :**"+user.mention + " is the big boy now ~~!")
 
 #whisper to another player
 @client.command(pass_context=True,aliases=['w'])
