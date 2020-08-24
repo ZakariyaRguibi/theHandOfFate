@@ -1,3 +1,4 @@
+#a simple io lib to help me get shits done
 import json
 
 #get dungeon master
