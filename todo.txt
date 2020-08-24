@@ -1,0 +1,1 @@
+add $lookup command to lookup for skils and their effects 
