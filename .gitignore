@@ -1,3 +1,4 @@
 .env
 .vscode/settings.json
 __pycache__/util.cpython-38.pyc
+dm.json
