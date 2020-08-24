@@ -1,4 +1,4 @@
-
+#helper file 
 
 #insert a string inside another string in a specific index
 def insert_sting_middle(str, word, index):
