@@ -14,8 +14,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 client = commands.Bot(command_prefix = '$')
 
 # general functions 
-
-# sending a dm to the dm
+# sending a dm to the dm ;)
 async def dmDm(message):
     dm = client.get_user(getDM())
     await dm.send(message)
@@ -48,6 +47,7 @@ async def set_dm(ctx, user: discord.User):
     setDM(strUser)
     await ctx.send("**The Madam :**"+user.mention + " is the big boy now ~~!")
 
+# a joke command that shows you who is the currently assigned DM
 @client.command(pass_context=True,aliases=['who_is_your_daddy?'])
 async def dd(ctx): 
     dm = client.get_user(getDM())
@@ -63,18 +63,22 @@ async def whisper(ctx, user: discord.User, *, input_message=None):
     await message.delete()
     await forwardMessage(input_message,ctx.message.author,user)
 
+#roll a dice once ex: $r 1d20 + 5
 @client.command(pass_context=True,aliases=['r'])
 async def roll(ctx,*,input_message="1d20"):
     result = format_roll(input_message)
     str_header="**The Madam :** Let me blow on them for you "+ctx.message.author.mention+":heart:\n"
     await ctx.send(str_header+result)
 
+
+#roll a dice multiple times  ex: $r 5 d20 + 5
 @client.command(pass_context=True,aliases=['rr'])
 async def reroll(ctx,number_of_rerols,*,input_message):
     result = format_roll(input_message,number_of_rerols)
     str_header = "**The Madam :** Aw ~~ Quite the number of dice you're rolling "+ctx.message.author.mention+"... Let me help !\n"
     await ctx.send(str_header+result)
 
+#roll and send the result to the dm eg : $s 1d20 + 8
 @client.command(pass_context=True,aliases=['s'])
 async def secret(ctx,*,input_message="1d20"):
     result = format_roll(input_message)
