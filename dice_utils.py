@@ -20,6 +20,21 @@ def format_roll(dice_command,rerolls = 1):
     dice_command= dice_command +"+0"
     if rerolls == 1: 
         dice,bonus,dice_value,flat_value = roll_command(dice_command)
-        return "**Result**: " + dice +"("+ str(flat_value)+") + " + str(bonus)+ "\n**Total**: "+str(dice_value)
+        if(bonus != 0):
+            return "**Result**: " + dice +"("+ str(flat_value)+") + " + str(bonus)+ "\n**Total**: "+str(dice_value)
+        else:
+            return "**Result**: " + dice +"("+ str(flat_value)+") \n**Total**: "+str(dice_value)
     else:
-        print()
+        header = "**Rolling...**:\n"
+        body=""
+        total=0
+        for i in range(0,int(rerolls)):
+            dice,bonus,dice_value,flat_value = roll_command(dice_command)
+            if(bonus != 0):
+                body=body+dice +"("+ str(flat_value)+") + " + str(bonus) +" = "+str(dice_value)+"\n"
+            else:
+                body=body+dice +"("+ str(flat_value)+") = "+str(dice_value)+"\n"
+            total=total+dice_value
+        tail= "**Total** : " +str(total)
+
+        return header + body + tail

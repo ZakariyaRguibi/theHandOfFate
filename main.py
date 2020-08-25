@@ -13,8 +13,6 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 
 client = commands.Bot(command_prefix = '$')
 
-
-
 # general functions 
 
 # sending a dm to the dm
@@ -63,13 +61,18 @@ async def roll(ctx,*,input_message):
     await ctx.send("**The Madam :** Let me blow on them for you :heart:")
     await ctx.send(result)
 
+@client.command(pass_context=True,aliases=['rr'])
+async def reroll(ctx,number_of_rerols,*,input_message):
+    result = format_roll(input_message,number_of_rerols)
+    await ctx.send("**The Madam :** Aw ~~ Quite the number of dice you're rolling ... Let me help !")
+    await ctx.send(result)
+
 @client.command(pass_context=True,aliases=['s'])
 async def secret(ctx,*,input_message):
     result = roll_command(input_message)
     header_string = ctx.message.author.mention + " rolled a secret check :\n"
     await ctx.send("**The Madam :** Spoilers ... ")
     await dmDm(header_string+result)
-
 
 #starting 
 client.run(TOKEN)
