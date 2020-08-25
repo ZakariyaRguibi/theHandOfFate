@@ -35,7 +35,10 @@ async def help(ctx):
         colour = discord.Colour.green())
     embed.set_author(name='Help : list of commands available')
     embed.add_field(name='$dm', value='set the dm  ', inline=False)
-    embed.add_field(name='$whisper / $w', value='whisper to a player ', inline=False)
+    embed.add_field(name='$whisper / $w', value='whisper to a player\n  eg: $w @player you look very cute today', inline=False)
+    embed.add_field(name='$roll / $r', value='roll a dice \n    eg: $r 1d20 + 3', inline=False)
+    embed.add_field(name='$reroll / $rr', value='roll a dice multiple times \n    eg: $rr 1 d20 + 3', inline=False)
+    embed.add_field(name='$secret / $s', value='make a secret roll \n    eg: $s 1 d20 + 3', inline=False)
     await ctx.send(embed=embed)
 
 #sent the dm of the campaign 
@@ -44,6 +47,11 @@ async def set_dm(ctx, user: discord.User):
     strUser = user.id
     setDM(strUser)
     await ctx.send("**The Madam :**"+user.mention + " is the big boy now ~~!")
+
+@client.command(pass_context=True,aliases=['who_is_your_daddy?'])
+async def dd(ctx): 
+    dm = client.get_user(getDM())
+    await ctx.send("**The Madam :**"+dm.mention + " is my daddy!")
 
 #whisper to another player
 @client.command(pass_context=True,aliases=['w'])
