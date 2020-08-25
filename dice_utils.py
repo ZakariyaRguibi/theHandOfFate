@@ -1,7 +1,8 @@
 import dice
 
 #a pre treatement function
-    #to do: multiple dice rools 
+#it takes a dice command, split it by "+" sign, then roll the original dice and add the bonuses
+#returns the original dice command (eg 1d6), the total number of bonuses, the result of the rolls, and the flat value of the dice
 def roll_command(dice_command):
     command=dice_command.split('+')
     dice_value=dice.roll(dice_command)
@@ -21,20 +22,22 @@ def format_roll(dice_command,rerolls = 1):
     if rerolls == 1: 
         dice,bonus,dice_value,flat_value = roll_command(dice_command)
         if(bonus != 0):
-            return "**Result**: " + dice +"("+ str(flat_value)+") + " + str(bonus)+ "\n**Total**: "+str(dice_value)
+            str_bonus="+"+str(bonus)
         else:
-            return "**Result**: " + dice +"("+ str(flat_value)+") \n**Total**: "+str(dice_value)
+            str_bonus=""
+        return "**Result:** " + dice +"("+ str(flat_value)+") " + str_bonus+ "\n**Total**: `"+str(dice_value)+"`"
+
     else:
-        header = "**Rolling...**:\n"
+        header = "**Rolling...:**\n"
         body=""
         total=0
         for i in range(0,int(rerolls)):
             dice,bonus,dice_value,flat_value = roll_command(dice_command)
             if(bonus != 0):
-                body=body+dice +"("+ str(flat_value)+") + " + str(bonus) +" = "+str(dice_value)+"\n"
+                body=body+"1"+dice +"("+ str(flat_value)+") + " + str(bonus) +" = `"+str(dice_value)+"`\n"
             else:
-                body=body+dice +"("+ str(flat_value)+") = "+str(dice_value)+"\n"
+                body=body+"1"+dice +"("+ str(flat_value)+") = `"+str(dice_value)+"`\n"
             total=total+dice_value
-        tail= "**Total** : " +str(total)
+        tail= "**Total:** " +str(total)
 
         return header + body + tail
