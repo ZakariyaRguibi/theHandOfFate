@@ -64,19 +64,19 @@ async def whisper(ctx, user: discord.User, *, input_message=None):
     await forwardMessage(input_message,ctx.message.author,user)
 
 @client.command(pass_context=True,aliases=['r'])
-async def roll(ctx,*,input_message):
+async def roll(ctx,*,input_message="1d20"):
     result = format_roll(input_message)
-    await ctx.send("**The Madam :** Let me blow on them for you :heart:")
-    await ctx.send(result)
+    str_header="**The Madam :** Let me blow on them for you "+ctx.message.author.mention+":heart:\n"
+    await ctx.send(str_header+result)
 
 @client.command(pass_context=True,aliases=['rr'])
 async def reroll(ctx,number_of_rerols,*,input_message):
     result = format_roll(input_message,number_of_rerols)
-    await ctx.send("**The Madam :** Aw ~~ Quite the number of dice you're rolling ... Let me help !")
-    await ctx.send(result)
+    str_header = "**The Madam :** Aw ~~ Quite the number of dice you're rolling "+ctx.message.author.mention+"... Let me help !\n"
+    await ctx.send(str_header+result)
 
 @client.command(pass_context=True,aliases=['s'])
-async def secret(ctx,*,input_message):
+async def secret(ctx,*,input_message="1d20"):
     result = format_roll(input_message)
     header_string = ctx.message.author.mention + " rolled a secret check :\n"
     await ctx.send("**The Madam :** Spoilers ... ")
