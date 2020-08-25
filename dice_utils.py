@@ -20,8 +20,8 @@ def format_roll(dice_command,rerolls = 1):
     #this is basically me being lazy to add another case to check if the command has a plus in it or not lol
     dice_command= dice_command +"+0"
     dice_type,bonus,dice_value,flat_value = roll_command(dice_command)
-    max_dice=dice.roll_max(dice_type);
-    min_dice=dice.roll_min(dice_type);
+    max_dice=dice.roll_max(dice_type)
+    min_dice=dice.roll_min(dice_type)
     if rerolls == 1: 
         if(bonus != 0):
             str_bonus="+"+str(bonus)
