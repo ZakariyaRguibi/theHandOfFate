@@ -77,7 +77,7 @@ async def reroll(ctx,number_of_rerols,*,input_message):
 
 @client.command(pass_context=True,aliases=['s'])
 async def secret(ctx,*,input_message):
-    result = roll_command(input_message)
+    result = format_roll(input_message)
     header_string = ctx.message.author.mention + " rolled a secret check :\n"
     await ctx.send("**The Madam :** Spoilers ... ")
     await dmDm(header_string+result)
