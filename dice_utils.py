@@ -31,12 +31,16 @@ def format_roll(dice_command,rerolls = 1):
         header = "**Rolling...:**\n"
         body=""
         total=0
+        #getting the bonus "yes this is only used to get the bonus, I defenetly need to start using classes lol "
+        dice,bonus,dice_value,flat_value = roll_command(dice_command)
+        if(bonus != 0):
+            str_bonus="+"+str(bonus)
+        else:
+            str_bonus=""
         for i in range(0,int(rerolls)):
             dice,bonus,dice_value,flat_value = roll_command(dice_command)
-            if(bonus != 0):
-                body=body+"1"+dice +"("+ str(flat_value)+") + " + str(bonus) +" = `"+str(dice_value)+"`\n"
-            else:
-                body=body+"1"+dice +"("+ str(flat_value)+") = `"+str(dice_value)+"`\n"
+            body=body+"1"+dice +"("+ str(flat_value)+") " + str_bonus +" = `"+str(dice_value)+"`\n"
+
             total=total+dice_value
         tail= "**Total:** " +str(total)
 
