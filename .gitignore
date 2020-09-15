@@ -1,5 +1,5 @@
 .env
-.venv
 .vscode/settings.json
 __pycache__/*
 dm.json
+.venv/*
