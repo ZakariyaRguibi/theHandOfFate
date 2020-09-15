@@ -1,5 +1,4 @@
 
-.venv
 
 .vscode/
 
@@ -7,6 +6,9 @@ __pycache__/
 
 .env
 
+test.venv
+
 dm.json
 
-.venv/bin/
+
+test.vscode/

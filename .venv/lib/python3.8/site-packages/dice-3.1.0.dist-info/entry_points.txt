@@ -1,4 +1,0 @@
-[console_scripts]
-dice = dice.command:main
-roll = dice.command:main
-
