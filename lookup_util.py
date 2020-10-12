@@ -7,9 +7,9 @@ def pretty(d, indent=0):
     """return a pretty string of the dict data"""
     text = ""
     for key, value in d.items():
-        if key in ["aon", "pfs"]:
+        if key in ["aon", "pfs", "src", "source"]:
             continue
-        text = text + ("\t" * indent) + str(key)
+        text = text + ("\t" * indent) + "**" + str(key) + "**:"
         if isinstance(value, dict):
             pretty(value, indent + 1)
         else:
@@ -49,6 +49,7 @@ def lookupIndex(L, target):
 
 
 def lookupWc(L, target):
+    """lookup similar shit"""
     i = 0
     wild_results = ""
     for elm in L:
@@ -58,7 +59,8 @@ def lookupWc(L, target):
     return wild_results
 
 
-def lookup(target):
+def lookup_str(target):
+    """lookup a string in the pf jsons"""
     f_indexs = open(
         "data/index.json",
     )
@@ -69,6 +71,6 @@ def lookup(target):
     pf2e = json.load(f_pf2e)
     index = lookupIndex(indexes, target)
     if index is None:
-        print(lookupWc(indexes, target))
+        return lookupWc(indexes, target)
     else:
-        print(pretty(pf2e[index]))
+        return pf2e[index]
