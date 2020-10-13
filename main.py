@@ -154,7 +154,6 @@ async def imitate(ctx):
 def lookup_prepare(result):
     """prepare an embed from a result"""
     body_text = result["body"]
-    print(body_text)
     if len(result["body"]) >= 2048:
         schunked_strings = chunks(body_text, 2048)
         embed = discord.Embed(

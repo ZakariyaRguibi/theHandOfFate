@@ -1,1 +1,4 @@
-add $lookup command to lookup for skils and their effects 
+clean up the fucking code
+fix the slicing to mart slicing
+fix redundant data
+  maybe search before and after the current element
