@@ -121,24 +121,71 @@ async def secret(ctx, *, input_message="1d20"):
 
 @client.command(pass_context=True, aliases=["l"])
 async def lookup(ctx, *, input_message):
-    result = lookup_prepare(input_message)
-    await ctx.send(embed=result)
+    result, is_found = lookup_str(input_message)
+    if is_found:
+        for result in lookup_prepare(result):
+            await ctx.send(embed=result)
+    elif not result:
+        await ctx.send("try again")
+    else:
+        i = 0
+        if len(result) >= 10:
+            output = result[0:9]
+        else:
+            output = result
+        for i in range(0, len(output)):
+            output[i] = "> " + "**[" + str(i + 1) + "]** : " + output[i]
+
+        await ctx.send("Did you mean : \n" + "".join(output))
+
+        def check(m):
+            return m.channel == ctx.message.channel and m.author == ctx.message.author
+
+        msg = await client.wait_for("message", check=check)
+        new_lookup = result[int(msg.content) - 1]
+        await lookup(ctx, input_message=new_lookup[:-1])
 
 
-def lookup_prepare(target):
-    result = lookup_str(target)
-    print(result)
-    embed = discord.Embed(
-        title=result["name"],
-        description=result["body"],
-        color=0xFF7000,
-    )
+@client.command(pass_context=True, aliases=["imit"])
+async def imitate(ctx):
+    await ctx.send("yallah roll initative a drari!")
+
+
+def lookup_prepare(result):
+    """prepare an embed from a result"""
+    body_text = result["body"]
+    print(body_text)
+    if len(result["body"]) >= 2048:
+        schunked_strings = chunks(body_text, 2048)
+        embed = discord.Embed(
+            title=result["name"],
+            description=schunked_strings[0],
+            url=result["src"],
+            color=0xFF7000,
+        )
+        yield embed
+        for string in schunked_strings[1:-1]:
+            embed = discord.Embed(
+                description=string,
+                color=0xFF7000,
+            )
+            yield embed
+        embed = discord.Embed(
+            description=schunked_strings[-1],
+            color=0xFF7000,
+        )
+    else:
+        embed = discord.Embed(
+            title=result["name"],
+            description=result["body"],
+            url=result["src"],
+            color=0xFF7000,
+        )
     for key, value in result.items():
         if key in ["aon", "pfs", "src", "source", "name", "body"]:
             continue
         embed.add_field(name=key, value=value, inline=True)
-
-    return embed
+    yield embed
 
 
 # starting

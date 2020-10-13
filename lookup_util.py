@@ -51,11 +51,11 @@ def lookupIndex(L, target):
 def lookupWc(L, target):
     """lookup similar shit"""
     i = 0
-    wild_results = ""
+    wild_results = []
     for elm in L:
         i = i + 1
         if re.search(target, elm):
-            wild_results = wild_results + elm + "\n"
+            wild_results.append(elm + "\n")
     return wild_results
 
 
@@ -71,6 +71,6 @@ def lookup_str(target):
     pf2e = json.load(f_pf2e)
     index = lookupIndex(indexes, target)
     if index is None:
-        return lookupWc(indexes, target)
+        return lookupWc(indexes, target), False
     else:
-        return pf2e[index]
+        return pf2e[index], True
