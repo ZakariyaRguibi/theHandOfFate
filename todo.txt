@@ -1,3 +1,6 @@
+bugs : 
+    $l gm ==> intering a number // doesn't work
+
 clean up the fucking code
 fix the slicing to mart slicing
 fix redundant data
