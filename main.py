@@ -143,8 +143,6 @@ async def lookup(ctx, *, input_message):
 
         msg = await client.wait_for("message", check=check)
         new_lookup = result[int(msg.content) - 1]
-        print(new_lookup[:-1])
-        print(new_lookup)
         await lookup(ctx, input_message=new_lookup[:-1])
 
 
