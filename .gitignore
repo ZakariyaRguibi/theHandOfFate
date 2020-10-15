@@ -4,4 +4,5 @@ env
 test.venv
 dm.json
 test.vscode/
+./.env
 .env

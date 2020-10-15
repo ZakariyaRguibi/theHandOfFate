@@ -132,7 +132,7 @@ async def lookup(ctx, *, input_message):
         if len(result) >= 10:
             output = result[0:9]
         else:
-            output = result
+            output = list(result)
         for i in range(0, len(output)):
             output[i] = "> " + "**[" + str(i + 1) + "]** : " + output[i]
 
@@ -143,6 +143,11 @@ async def lookup(ctx, *, input_message):
 
         msg = await client.wait_for("message", check=check)
         new_lookup = result[int(msg.content) - 1]
+        print("-------------------------------")
+        print(new_lookup[:-1])
+        print("-------------------------------")
+        print(new_lookup)
+        print("-------------------------------")
         await lookup(ctx, input_message=new_lookup[:-1])
 
 
