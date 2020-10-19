@@ -22,10 +22,22 @@ def indexing():
     with open("data/pf2.json") as json_file:
         data = json.load(json_file)
         names = []
-        for elm in data:
-            names.append(elm["name"].lower())
+        bo = False
+        for i in range(0, len(data) - 1):
+            j = i
+            if data[j]["name"] == data[j + 1]["name"]:
+                data[j]["name"] = data[j]["name"] + " (" + data[j]["type"] + ")"
+                bo = True
+            elif bo:
+                data[j]["name"] = data[j]["name"] + " (" + data[j]["type"] + ")"
+                bo = False
+            names.append(data[i]["name"].lower())
         with open("data/index.json", "w") as outfile:
             json.dump(names, outfile)
+
+
+def checkNeighbours(table, index):
+    """check if neighbors have same names than curr element"""
 
 
 def lookupIndex(L, target):
