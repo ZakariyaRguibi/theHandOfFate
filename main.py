@@ -5,6 +5,7 @@ from discord.ext import commands
 from dotenv import load_dotenv
 from util import *
 from helpers import *
+import asyncio
 
 load_dotenv()
 from dice_utils import *
@@ -141,11 +142,15 @@ async def lookup(ctx, *, input_message):
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author
 
-        msg = await client.wait_for("message", check=check)
-        new_lookup = result[int(msg.content) - 1]
-        await msg.delete()
-        await selection.delete()
-        await lookup(ctx, input_message=new_lookup[:-1])
+        try:
+            msg = await client.wait_for("message", timeout=15, check=check)
+            new_lookup = result[int(msg.content) - 1]
+            await lookup(ctx, input_message=new_lookup[:-1])
+            await msg.delete()
+        except asyncio.TimeoutError:
+            await ctx.send("Selection timed out.")
+        finally:
+            await selection.delete()
 
 
 @client.command(pass_context=True, aliases=["imit"])
