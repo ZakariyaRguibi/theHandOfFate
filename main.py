@@ -105,11 +105,6 @@ async def lookup(ctx, *, input_message):
             await selection.delete()
 
 
-@client.command(pass_context=True, aliases=["imit"])
-async def imitate(ctx):
-    await ctx.send("yallah roll initative a drari!")
-
-
 def lookup_prepare(result):
     """prepare an embed from a result"""
     try:
