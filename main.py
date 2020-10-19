@@ -3,7 +3,6 @@ import os
 import discord
 from discord.ext import commands
 from dotenv import load_dotenv
-from util import *
 from helpers import *
 import asyncio
 
@@ -15,18 +14,6 @@ from lookup_util import *
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 client = commands.Bot(command_prefix="$")
-
-# general functions
-# sending a dm to the dm ;)
-async def dmDm(message):
-    dm = client.get_user(getDM())
-    await dm.send(message)
-
-
-# forward the whisper to the Dm
-async def forwardMessage(message, user1, user2):
-    message = user1.mention + " whispers to " + user2.mention + ": " + message
-    await dmDm(message)
 
 
 # bot commands
@@ -61,32 +48,6 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
-# sent the dm of the campaign
-@client.command(pass_context=True, aliases=["dm"])
-async def set_dm(ctx, user: discord.User):
-    strUser = user.id
-    setDM(strUser)
-    await ctx.send("**The Madam :**" + user.mention + " is the big boy now ~~!")
-
-
-# a joke command that shows you who is the currently assigned DM
-@client.command(pass_context=True, aliases=["who_is_your_daddy?"])
-async def dd(ctx):
-    dm = client.get_user(getDM())
-    await ctx.send("**The Madam :**" + dm.mention + " is my daddy!")
-
-
-# whisper to another player
-@client.command(pass_context=True, aliases=["w"])
-async def whisper(ctx, user: discord.User, *, input_message=None):
-    input_message = input_message or "This Message is sent via DM"
-    message = "whisper from " + ctx.message.author.mention + " : " + input_message
-    await user.send(message)
-    message = ctx.message
-    await message.delete()
-    await forwardMessage(input_message, ctx.message.author, user)
-
-
 # roll a dice once ex: $r 1d20 + 5
 @client.command(pass_context=True, aliases=["r"])
 async def roll(ctx, *, input_message="1d20"):
@@ -109,15 +70,6 @@ async def reroll(ctx, number_of_rerols, *, input_message):
         + "... Let me help !\n"
     )
     await ctx.send(str_header + result)
-
-
-# roll and send the result to the dm eg : $s 1d20 + 8
-@client.command(pass_context=True, aliases=["s"])
-async def secret(ctx, *, input_message="1d20"):
-    result = format_roll(input_message)
-    header_string = ctx.message.author.mention + " rolled a secret check :\n"
-    await ctx.send("**The Madam :** Spoilers ... ")
-    await dmDm(header_string + result)
 
 
 @client.command(pass_context=True, aliases=["l"])
