@@ -126,7 +126,7 @@ async def lookup(ctx, *, input_message):
         for result in lookup_prepare(result):
             await ctx.send(embed=result)
     elif not result:
-        await ctx.send("try again")
+        await ctx.send("Input not found, Try again.")
     else:
         i = 0
         if len(result) >= 10:
@@ -136,13 +136,15 @@ async def lookup(ctx, *, input_message):
         for i in range(0, len(output)):
             output[i] = "> " + "**[" + str(i + 1) + "]** : " + output[i]
 
-        await ctx.send("Did you mean : \n" + "".join(output))
+        selection = await ctx.send("Did you mean : \n" + "".join(output))
 
         def check(m):
             return m.channel == ctx.message.channel and m.author == ctx.message.author
 
         msg = await client.wait_for("message", check=check)
         new_lookup = result[int(msg.content) - 1]
+        await msg.delete()
+        await selection.delete()
         await lookup(ctx, input_message=new_lookup[:-1])
 
 
