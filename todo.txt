@@ -1,7 +1,7 @@
-bugs : 
-    $l gm ==> intering a number // doesn't work
+delete user input
+
+
 
 clean up the fucking code
-fix the slicing to mart slicing
-fix redundant data
-  maybe search before and after the current element
+fix the slicing to smart slicing
+
