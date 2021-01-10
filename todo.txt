@@ -1,4 +1,4 @@
-bug : ready item isn't detected
+bug : ready (item) isn't detected
 
 
 clean up the fucking code
