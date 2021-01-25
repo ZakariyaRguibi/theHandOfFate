@@ -9,12 +9,12 @@ import asyncio
 load_dotenv()
 from dice_utils import *
 from lookup_util import *
+from d20 import roll
 
 # get discord token from .env folder
 TOKEN = os.getenv("DISCORD_TOKEN")
 
 client = commands.Bot(command_prefix="$")
-
 
 # bot commands
 
@@ -50,26 +50,41 @@ async def help(ctx):
 
 # roll a dice once ex: $r 1d20 + 5
 @client.command(pass_context=True, aliases=["r"])
-async def roll(ctx, *, input_message="1d20"):
-    result = format_roll(input_message)
+async def rolling(ctx, *, input_message="1d20"):
+    result = roll(input_message)
     str_header = (
         "**The Madam :** Let me blow on them for you "
         + ctx.message.author.mention
         + ":heart:\n"
+        + "**Result: **"
     )
-    await ctx.send(str_header + result)
+    await ctx.send(
+        str_header
+        + str(result).split("=")[0]
+        + "**\nTotal : **"
+        + "`"
+        + str(result.total)
+        + "`"
+    )
+    await ctx.message.delete()
 
 
 # roll a dice multiple times  ex: $r 5 d20 + 5
 @client.command(pass_context=True, aliases=["rr"])
 async def reroll(ctx, number_of_rerols, *, input_message):
-    result = format_roll(input_message, number_of_rerols)
+    result = format_roll(input_message, int(number_of_rerols))
     str_header = (
         "**The Madam :** Aw ~~ Quite the number of dice you're rolling "
         + ctx.message.author.mention
         + "... Let me help !\n"
     )
     await ctx.send(str_header + result)
+    await ctx.message.delete()
+
+
+@client.command(pass_context=True, aliases=["al"])
+async def alias(ctx, commandTo, commandFrom):
+    await ctx.send("This a test command")
 
 
 @client.command(pass_context=True, aliases=["l"])
