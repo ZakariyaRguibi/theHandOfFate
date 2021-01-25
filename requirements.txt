@@ -11,3 +11,4 @@ multidict==4.7.6
 pyparsing==2.4.7
 python-dotenv==0.14.0
 yarl==1.5.1
+d20==1.0.4
