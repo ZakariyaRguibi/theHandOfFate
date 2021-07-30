@@ -1,6 +1,5 @@
 # theHandOfFate
-a Discord bot for DnD players to send private messages to eachother under the DM supervision
-
+a discord bot to roll dice and lookup pathfinder commands 
 ### how to use
 install dependeries from requirement.txt using the following command 
 
