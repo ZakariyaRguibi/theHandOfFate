@@ -49,13 +49,39 @@ async def help(ctx):
 
 
 # roll a dice once ex: $r 1d20 + 5
+@client.command(pass_context=True, aliases=["gu"])
+async def gurpsCheck(ctx, *, input_message=""):
+    result = roll("3d6")
+    if result.total in {3, 4}:
+        emojie = ":star_struck:"
+    elif result.total in {17, 18}:
+        emojie = ":scream:"
+    else:
+        emojie = ""
+    diceString = str(result).split("=")[0] + emojie
+    diceValue = result.total
+
+    if input_message != "":
+        diceString = roll(input_message).result.split("=")[0] + " - " + diceString
+        diceValue = roll(input_message).total - diceValue
+    str_header = (
+        ctx.message.author.mention
+        + " <:dicegoblin:854147577318867004> \n"
+        + "**Result: **"
+    )
+    await ctx.send(
+        str_header + diceString + "**\nTotal : **" + "`" + str(diceValue) + "`"
+    )
+    await ctx.message.delete()
+
+
+# roll a dice once ex: $r 1d20 + 5
 @client.command(pass_context=True, aliases=["r"])
 async def rolling(ctx, *, input_message="1d20"):
     result = roll(input_message)
     str_header = (
-        "**The Madam :** Let me blow on them for you "
-        + ctx.message.author.mention
-        + ":heart:\n"
+        ctx.message.author.mention
+        + " <:dicegoblin:854147577318867004> \n"
         + "**Result: **"
     )
     await ctx.send(
@@ -69,7 +95,7 @@ async def rolling(ctx, *, input_message="1d20"):
     await ctx.message.delete()
 
 
-# roll a dice multiple times  ex: $r 5 d20 + 5
+# roll a dice multiple times  ex: $rr 5 d20 + 5
 @client.command(pass_context=True, aliases=["rr"])
 async def reroll(ctx, number_of_rerols, *, input_message):
     result = format_roll(input_message, int(number_of_rerols))
