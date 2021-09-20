@@ -48,6 +48,26 @@ async def help(ctx):
     await ctx.send(embed=embed)
 
 
+@client.command(pass_context=True, aliases=["cnv"])
+async def convertUsdToGurps(ctx, *, input_message=""):
+    a = int(input_message)
+    await ctx.send(
+        ""
+        + ctx.message.author.mention
+        + " <:dicegoblin:854147577318867004> \n"
+        + "**Conversion: \n**"
+        + input_message
+        + "$ : "
+        + str(a // 80)
+        + " gold, "
+        + str((a % 80) // 4)
+        + " silver, "
+        + str((a % 80) % 4)
+        + " copper."
+    )
+    await ctx.message.delete()
+
+
 # roll a dice once ex: $r 1d20 + 5
 @client.command(pass_context=True, aliases=["gu"])
 async def gurpsCheck(ctx, *, input_message=""):
